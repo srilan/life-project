@@ -1,7 +1,9 @@
 
 import MapView, {Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, TextInput, Button } from 'react-native';
+import RNGamePad from 'react-native-game-pad';
 import { useEffect, useState } from 'react';
+
 export function World({navigation}) {
   const [markers, setMarkers] = useState([]);
   useEffect(()=> {
@@ -11,7 +13,7 @@ export function World({navigation}) {
         long: -122.4324,
       },      
       title: "test",
-      description: "test"
+      description: "test2"
     });
   }, []);
 
@@ -36,9 +38,12 @@ export function World({navigation}) {
       </MapView>
       <View style={{ position: 'absolute', top: 0, left: 0 }}>
         <Text>Name</Text>
-        <Button
-            title="Enter World"
-            onPress={() => navigation.navigate('Home')}
+        <RNGamePad        
+          options={{
+            size: 400,
+            color: "blue",
+            lockX: true
+          }}
         />
       </View>
     </View>
