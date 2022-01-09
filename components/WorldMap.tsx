@@ -3,12 +3,16 @@ import { StyleSheet, Text, View, Dimensions, TextInput, Button } from 'react-nat
 import { useEffect, useState, useRef } from 'react';
 import SpriteSheet from 'rn-sprite-sheet';
 
-const WorldMap = ({socket, setMap, hasPath, 
+const WorldMap = ({socket, hasPath, 
   playerPosition, path, mapRef,
   stamina}) => {
   const playerSprite = useRef<SpriteSheet>(null);   
   const gotoRegion = (cood: any) => {  
     socket.emit('walk to', cood);
+  }
+  const viewPlace = (placeId: any) => {  
+    console.log(placeId);
+    socket.emit('env place view', placeId);
   }
   const play = (type : string) => {
     if (playerSprite && playerSprite.current) {      
@@ -30,6 +34,7 @@ const WorldMap = ({socket, setMap, hasPath,
   return (    
     <MapView  style={[StyleSheet.absoluteFillObject, {flex:1}]}  ref={mapRef}
       provider={PROVIDER_GOOGLE}
+      onPoiClick={(e) => viewPlace(e.nativeEvent.placeId)}
       onPress={
         (e) => gotoRegion(e.nativeEvent.coordinate)}>
       {hasPath && <Polyline
